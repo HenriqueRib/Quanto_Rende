@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quantorendes/TelaResposta.dart';
 
 
 class Home extends StatefulWidget {
@@ -13,11 +14,12 @@ class _HomeState extends State<Home> {
   TextEditingController _controllerkmInicial = TextEditingController();
   TextEditingController _controllerQtdCombustivel = TextEditingController();
   String  _textoResultado = "Descubra quanto que seu carro está rendendo";
+  var _controller = TextEditingController();
 
   _calcularkm(){
     int kmfinal = int.parse(_controllerkmFinal.text);
     int kminicial = int.parse(_controllerkmInicial.text);
-    int qtdCombustivel = int.parse(_controllerQtdCombustivel.text);
+    double qtdCombustivel = double.parse(_controllerQtdCombustivel.text);
     int resultado;
     double _kmPorLitro;
 
@@ -25,16 +27,16 @@ class _HomeState extends State<Home> {
     setState(() {
       _kmPorLitro = resultado / qtdCombustivel;
       _textoResultado = " Desta vez seu carro fez " + _kmPorLitro.toStringAsFixed(_kmPorLitro.truncateToDouble() == _kmPorLitro ? 0 : 2) + "km por Combustível!";
-
     });
 
   }
   _limpar(){
+
     setState(() {
       _textoResultado = "Descubra quanto que seu carro está rendendo";
-      String   _controllerkmFinal = '' ;
-      String  _controllerkmInicial = "";
-      String _controllerQtdCombustivel = "";
+      _controllerkmFinal.clear();
+      _controllerkmInicial.clear();
+      _controllerQtdCombustivel.clear();
     });
   }
 
@@ -67,8 +69,12 @@ class _HomeState extends State<Home> {
               TextField(
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                    labelText: "Km Final, ex: 73111"
-                ),
+                    labelText: "Km Final, ex: 73111",
+                    suffixIcon: IconButton(
+                      onPressed: () => _controllerkmFinal.clear(),
+                      icon: Icon(Icons.clear),
+                    ),
+                  ),
                 style: TextStyle(
                     fontSize: 19
                 ),
@@ -77,8 +83,12 @@ class _HomeState extends State<Home> {
               TextField(
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                    labelText: "Km Inicial, ex: 72878"
-                ),
+                    labelText: "Km Inicial, ex: 72878",
+                    suffixIcon: IconButton(
+                      onPressed: () => _controllerkmInicial.clear(),
+                      icon: Icon(Icons.clear),
+                    ),
+                  ),
                 style: TextStyle(
                     fontSize: 19
                 ),
@@ -87,8 +97,12 @@ class _HomeState extends State<Home> {
               TextField(
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                    labelText: "Quantidade de Combustível, ex: 13"
-                ),
+                    labelText: "Qtd de Combustível, ex: 13.5",
+                    suffixIcon: IconButton(
+                      onPressed: () => _controllerQtdCombustivel.clear(),
+                      icon: Icon(Icons.clear),
+                    ),
+                  ),
                 style: TextStyle(
                     fontSize: 19
                 ),
@@ -106,7 +120,16 @@ class _HomeState extends State<Home> {
                           fontSize: 20
                       ),
                     ),
-                    onPressed: _calcularkm
+                    //onPressed: _calcularkm
+                  onPressed: (){
+                      _calcularkm();
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => TelaResposta(valor: _textoResultado,)
+                        )
+                    );
+                  },
                 ),
               ),
               Padding(
@@ -121,7 +144,7 @@ class _HomeState extends State<Home> {
                           fontSize: 20
                       ),
                     ),
-                    onPressed: _limpar,
+                    onPressed:() =>  _limpar(),
                 ),
               ),
             ],
@@ -130,7 +153,4 @@ class _HomeState extends State<Home> {
       )
     );
   }
-}
-
-class _limpar {
 }
