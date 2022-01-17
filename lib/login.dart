@@ -1,5 +1,7 @@
 // ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
+import 'package:quanto_rendes/aplicacao.dart';
+import 'package:dio/dio.dart';
 // import 'model/Usuario.dart';
 
 class Login extends StatefulWidget {
@@ -160,7 +162,7 @@ class _LoginState extends State<Login> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 16, bottom: 10),
+                  padding: const EdgeInsets.only(top: 20, bottom: 10),
                   child: RaisedButton(
                       child: const Text(
                         "Entrar",
@@ -184,15 +186,30 @@ class _LoginState extends State<Login> {
                     // },
                   ),
                 ),
+                const Padding(padding: EdgeInsets.only(top: 20, bottom: 100)),
                 Center(
-                  child: GestureDetector(
-                    child: const Text("Pular etapa e apenas Calcular!",
-                        style: TextStyle(color: Colors.blue, fontSize: 25)),
-                    // onTap: () {
-                    //   Navigator.push(context,
-                    //       MaterialPageRoute(builder: (context) => Cadastro()));
-                    // },
-                  ),
+                  child: RaisedButton(
+                      child: const Text(
+                        "Apenas Calcular!",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                      color: const Color(0x00000000),
+                      padding: const EdgeInsets.fromLTRB(32, 16, 32, 16),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(32)),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Home()));
+                      }),
+                  // child: GestureDetector(
+                  //   child: const Text("Pular etapa e apenas Calcular!",
+                  //       style: TextStyle(color: Colors.blue, fontSize: 25)),
+                  // onTap: () {
+                  //   Navigator.push(context,
+                  //       MaterialPageRoute(builder: (context) => Cadastro()));
+                  // },
                 ),
               ],
             ),
