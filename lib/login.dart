@@ -1,4 +1,3 @@
-// ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
 import 'package:quanto_rendes/aplicacao.dart';
 import 'package:dio/dio.dart';
