@@ -1,36 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:quanto_rendes/aplicacao.dart';
+import 'package:dio/dio.dart';
 
-import 'cadastro.dart';
-// import 'model/Usuario.dart';
-
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+class Cadastro extends StatefulWidget {
+  const Cadastro({Key? key}) : super(key: key);
 
   @override
-  _LoginState createState() => _LoginState();
+  _CadastroState createState() => _CadastroState();
 }
 
-class _LoginState extends State<Login> {
-  final int _selectedIndex = 0;
-  static const TextStyle optionStyle = TextStyle(
-      fontSize: 30,
-      fontWeight: FontWeight.bold,
-      letterSpacing: 0,
-      wordSpacing: 0,
-      decoration: TextDecoration.none,
-      color: Colors.redAccent);
+class _CadastroState extends State<Cadastro> {
+  // ignore: unused_field
+  final TextEditingController _controllerNome = TextEditingController(text: "");
 
+  // ignore: unused_field
   final TextEditingController _controllerEmail =
       TextEditingController(text: "");
+
+  // ignore: unused_field
   final TextEditingController _controllerSenha =
       TextEditingController(text: "");
+
+  // ignore: unused_field
+  final TextEditingController _controllerConfirmarSenha =
+      TextEditingController(text: "");
+
+  // ignore: unused_field
   String _mensagemErro = "";
 
   _validarCampos() {
     //Recupera dados dos campos
+    String nome = _controllerNome.text;
     String email = _controllerEmail.text;
     String senha = _controllerSenha.text;
+    String confirmarSenha = _controllerConfirmarSenha.text;
 
     if (email.isNotEmpty && email.contains("@")) {
       if (senha.isNotEmpty) {
@@ -41,6 +43,8 @@ class _LoginState extends State<Login> {
         // Usuario usuario = Usuario();
         // usuario.email = email;
         // usuario.senha = senha;
+
+        getHttp();
 
         // _logarUsuario(usuario);
       } else {
@@ -55,27 +59,40 @@ class _LoginState extends State<Login> {
     }
   }
 
-  String loginController = '';
+  void getHttp() async {
+    try {
+      // var response = await Dio().get('http://www.google.com');
+      var response =
+          await Dio().post('https://codeline43.com.br/registercustom', data: {
+        'name': _controllerNome.text,
+        'email': _controllerEmail.text,
+        'password': _controllerSenha.text,
+        'password_confirmation': _controllerConfirmarSenha.text,
+      });
 
-  // _logarUsuario(Usuario usuario) {}
+      setState(() {
+        _mensagemErro = "Cadastrado com sucesso!";
+      });
 
-  Future _verificarUsuarioLogado() async {}
+      print('Oiiiiii');
+      print(response);
+    } catch (e) {
+      setState(() {
+        _mensagemErro = "erro!";
+      });
 
-  @override
-  void initState() {
-    _verificarUsuarioLogado();
-    super.initState();
+      print('ERRROOOOOOO');
+      print(e);
+    }
   }
-
-  // @override
-  // Future<void> initState() async {
-  //   _verificarUsuarioLogado();
-  //   super.initState();
-  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Cadastrar usuário'),
+        backgroundColor: Colors.teal,
+      ),
       body: Container(
         color: Colors.teal[900],
         padding: const EdgeInsets.all(20),
@@ -97,7 +114,31 @@ class _LoginState extends State<Login> {
                   child: Center(
                     child: Text(
                       _mensagemErro,
-                      style: const TextStyle(color: Colors.red, fontSize: 20),
+                      style: const TextStyle(color: Colors.white, fontSize: 20),
+                    ),
+                  ),
+                ),
+                TextField(
+                  controller: _controllerNome,
+                  style: const TextStyle(color: Colors.white),
+                  keyboardType: TextInputType.text,
+                  // ignore: prefer_const_constructors
+                  decoration: InputDecoration(
+                    border: const UnderlineInputBorder(),
+                    labelText: 'Nome',
+                    labelStyle: const TextStyle(
+                      fontFamily: 'CalibriBold',
+                      fontSize: 16,
+                      color: Colors.white,
+                    ),
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        // loginController.clearField('email');
+                      },
+                      icon: const Icon(
+                        Icons.people_sharp,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
@@ -107,7 +148,7 @@ class _LoginState extends State<Login> {
                     controller: _controllerEmail,
                     autofocus: false,
                     keyboardType: TextInputType.emailAddress,
-                    style: const TextStyle(fontSize: 20),
+                    style: const TextStyle(fontSize: 20, color: Colors.white),
                     // ignore: prefer_const_constructors
                     decoration: InputDecoration(
                       border: const UnderlineInputBorder(),
@@ -115,19 +156,15 @@ class _LoginState extends State<Login> {
                       labelStyle: const TextStyle(
                         fontFamily: 'CalibriBold',
                         fontSize: 16,
-                        color: Colors.black,
+                        color: Colors.white,
                       ),
                       suffixIcon: IconButton(
                         onPressed: () {
                           // loginController.clearField('email');
                         },
-                        icon: Icon(
-                          loginController != ''
-                              // &&
-                              //         loginController.email!.length > 0
-                              ? Icons.clear
-                              : Icons.email_outlined,
-                          color: Colors.black,
+                        icon: const Icon(
+                          Icons.email_outlined,
+                          color: Colors.white,
                         ),
                       ),
                     ),
@@ -135,6 +172,7 @@ class _LoginState extends State<Login> {
                 ),
                 TextField(
                   controller: _controllerSenha,
+                  style: const TextStyle(color: Colors.white),
                   obscureText: true,
                   keyboardType: TextInputType.text,
                   // ignore: prefer_const_constructors
@@ -144,19 +182,40 @@ class _LoginState extends State<Login> {
                     labelStyle: const TextStyle(
                       fontFamily: 'CalibriBold',
                       fontSize: 16,
-                      color: Colors.black,
+                      color: Colors.white,
                     ),
                     suffixIcon: IconButton(
                       onPressed: () {
                         // loginController.clearField('email');
                       },
-                      icon: Icon(
-                        loginController != ''
-                            // &&
-                            //         loginController.email!.length > 0
-                            ? Icons.clear
-                            : Icons.lock,
-                        color: Colors.black,
+                      icon: const Icon(
+                        Icons.lock,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+                TextField(
+                  controller: _controllerConfirmarSenha,
+                  style: const TextStyle(color: Colors.white),
+                  obscureText: true,
+                  keyboardType: TextInputType.text,
+                  // ignore: prefer_const_constructors
+                  decoration: InputDecoration(
+                    border: const UnderlineInputBorder(),
+                    labelText: 'Confirmar Senha',
+                    labelStyle: const TextStyle(
+                      fontFamily: 'CalibriBold',
+                      fontSize: 16,
+                      color: Colors.white,
+                    ),
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        // loginController.clearField('email');
+                      },
+                      icon: const Icon(
+                        Icons.lock,
+                        color: Colors.white,
                       ),
                     ),
                   ),
@@ -165,7 +224,7 @@ class _LoginState extends State<Login> {
                   padding: const EdgeInsets.only(top: 20, bottom: 10),
                   child: RaisedButton(
                       child: const Text(
-                        "Entrar",
+                        "Cadastrar",
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
                       color: const Color(0xff91998A),
@@ -175,43 +234,6 @@ class _LoginState extends State<Login> {
                       onPressed: () {
                         _validarCampos();
                       }),
-                ),
-                Center(
-                  child: GestureDetector(
-                    child: const Text("Não tem conta? cadastre-se!",
-                        style: TextStyle(color: Colors.white)),
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Cadastro()));
-                    },
-                  ),
-                ),
-                const Padding(padding: EdgeInsets.only(top: 20, bottom: 100)),
-                Center(
-                  child: RaisedButton(
-                      child: const Text(
-                        "Apenas Calcular!",
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                      ),
-                      color: const Color(0x00000000),
-                      padding: const EdgeInsets.fromLTRB(32, 16, 32, 16),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(32)),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Home()));
-                      }),
-                  // child: GestureDetector(
-                  //   child: const Text("Pular etapa e apenas Calcular!",
-                  //       style: TextStyle(color: Colors.blue, fontSize: 25)),
-                  // onTap: () {
-                  //   Navigator.push(context,
-                  //       MaterialPageRoute(builder: (context) => Cadastro()));
-                  // },
                 ),
               ],
             ),
