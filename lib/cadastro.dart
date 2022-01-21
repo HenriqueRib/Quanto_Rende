@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'aplicacao.dart';
 
 class Cadastro extends StatefulWidget {
   const Cadastro({Key? key}) : super(key: key);
@@ -29,10 +30,10 @@ class _CadastroState extends State<Cadastro> {
 
   _validarCampos() {
     //Recupera dados dos campos
-    String nome = _controllerNome.text;
+    // String nome = _controllerNome.text;
     String email = _controllerEmail.text;
     String senha = _controllerSenha.text;
-    String confirmarSenha = _controllerConfirmarSenha.text;
+    // String confirmarSenha = _controllerConfirmarSenha.text;
 
     if (email.isNotEmpty && email.contains("@")) {
       if (senha.isNotEmpty) {
@@ -61,24 +62,34 @@ class _CadastroState extends State<Cadastro> {
 
   void getHttp() async {
     try {
-      // var response = await Dio().get('http://www.google.com');
       var response =
-          await Dio().post('https://codeline43.com.br/registercustom', data: {
-        'name': _controllerNome.text,
-        'email': _controllerEmail.text,
-        'password': _controllerSenha.text,
-        'password_confirmation': _controllerConfirmarSenha.text,
-      });
+          // await Dio().post('https://codeline43.com.br/registercustom', data: {
+          await Dio().post(
+        'http://10.0.2.2:8000/mobile/registercustom',
+        data: {
+          'name': _controllerNome.text,
+          'email': _controllerEmail.text,
+          'password': _controllerSenha.text,
+          'password_confirmation': _controllerConfirmarSenha.text,
+        },
+        options: Options(
+            followRedirects: false,
+            validateStatus: (status) {
+              return status! < 500;
+            }),
+      );
 
       setState(() {
         _mensagemErro = "Cadastrado com sucesso!";
       });
 
       print('Oiiiiii');
-      print(response);
+      print(response.data);
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const Home()));
     } catch (e) {
       setState(() {
-        _mensagemErro = "erro!";
+        _mensagemErro = "Erro!";
       });
 
       print('ERRROOOOOOO');

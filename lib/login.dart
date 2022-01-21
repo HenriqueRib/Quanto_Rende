@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quanto_rendes/aplicacao.dart';
-
+import 'package:dio/dio.dart';
 import 'cadastro.dart';
-// import 'model/Usuario.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -12,7 +11,6 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final int _selectedIndex = 0;
   static const TextStyle optionStyle = TextStyle(
       fontSize: 30,
       fontWeight: FontWeight.bold,
@@ -38,11 +36,7 @@ class _LoginState extends State<Login> {
           _mensagemErro = "";
         });
 
-        // Usuario usuario = Usuario();
-        // usuario.email = email;
-        // usuario.senha = senha;
-
-        // _logarUsuario(usuario);
+        getHttp();
       } else {
         setState(() {
           _mensagemErro = "Preencha a senha!";
@@ -52,6 +46,41 @@ class _LoginState extends State<Login> {
       setState(() {
         _mensagemErro = "Preencha o E-mail utilizando @";
       });
+    }
+  }
+
+  void getHttp() async {
+    try {
+      var response =
+          // await Dio().post('https://codeline43.com.br/login', data: {
+          await Dio().post(
+        'http://10.0.2.2:8000/login',
+        data: {
+          'email': _controllerEmail.text,
+          'password': _controllerSenha.text,
+        },
+        options: Options(
+            followRedirects: false,
+            validateStatus: (status) {
+              return status! < 500;
+            }),
+      );
+
+      setState(() {
+        _mensagemErro = "Cadastrado com sucesso!";
+      });
+
+      // ignore: avoid_print
+      print('Ok ${response.data}');
+
+      Navigator.pushReplacementNamed(context, "/home");
+    } catch (e) {
+      setState(() {
+        _mensagemErro = "Erro!";
+      });
+
+      // ignore: avoid_print
+      print('ERRROOOOOOO -> $e');
     }
   }
 
@@ -107,7 +136,7 @@ class _LoginState extends State<Login> {
                     controller: _controllerEmail,
                     autofocus: false,
                     keyboardType: TextInputType.emailAddress,
-                    style: const TextStyle(fontSize: 20),
+                    style: const TextStyle(fontSize: 20, color: Colors.white),
                     // ignore: prefer_const_constructors
                     decoration: InputDecoration(
                       border: const UnderlineInputBorder(),
@@ -115,7 +144,7 @@ class _LoginState extends State<Login> {
                       labelStyle: const TextStyle(
                         fontFamily: 'CalibriBold',
                         fontSize: 16,
-                        color: Colors.black,
+                        color: Colors.white,
                       ),
                       suffixIcon: IconButton(
                         onPressed: () {
@@ -127,7 +156,7 @@ class _LoginState extends State<Login> {
                               //         loginController.email!.length > 0
                               ? Icons.clear
                               : Icons.email_outlined,
-                          color: Colors.black,
+                          color: Colors.white,
                         ),
                       ),
                     ),
@@ -136,6 +165,7 @@ class _LoginState extends State<Login> {
                 TextField(
                   controller: _controllerSenha,
                   obscureText: true,
+                  style: const TextStyle(color: Colors.white),
                   keyboardType: TextInputType.text,
                   // ignore: prefer_const_constructors
                   decoration: InputDecoration(
@@ -144,7 +174,7 @@ class _LoginState extends State<Login> {
                     labelStyle: const TextStyle(
                       fontFamily: 'CalibriBold',
                       fontSize: 16,
-                      color: Colors.black,
+                      color: Colors.white,
                     ),
                     suffixIcon: IconButton(
                       onPressed: () {
@@ -156,7 +186,7 @@ class _LoginState extends State<Login> {
                             //         loginController.email!.length > 0
                             ? Icons.clear
                             : Icons.lock,
-                        color: Colors.black,
+                        color: Colors.white,
                       ),
                     ),
                   ),

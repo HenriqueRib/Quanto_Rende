@@ -13,7 +13,7 @@ class _HomeState extends State<Home> {
   final TextEditingController _controllerkmInicial = TextEditingController();
   final TextEditingController _controllerQtdCombustivel =
       TextEditingController();
-  String _textoResultado = "Descubra quanto que seu carro está rendendo";
+  String _textoResultado = "Descubra1 quanto que seu carro está rendendo";
   var _controller = TextEditingController();
 
   _calcularkm() {
