@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'aplicacao.dart';
@@ -41,10 +43,6 @@ class _CadastroState extends State<Cadastro> {
           _mensagemErro = "";
         });
 
-        // Usuario usuario = Usuario();
-        // usuario.email = email;
-        // usuario.senha = senha;
-
         getHttp();
 
         // _logarUsuario(usuario);
@@ -62,10 +60,18 @@ class _CadastroState extends State<Cadastro> {
 
   void getHttp() async {
     try {
-      var response =
-          // await Dio().post('https://codeline43.com.br/registercustom', data: {
-          await Dio().post(
-        'http://10.0.2.2:8000/mobile/registercustom',
+      // var response = await Dio().post(
+      //   'https://codeline43.com.br/registercustom',
+      //   data: {
+
+      //Caminho pelo emulador
+      // var response = await Dio().post(
+      //   'http://10.0.2.2:8000/mobile/registercustom',
+      //   data: {
+
+      // Caminho externo
+      var response = await Dio().post(
+        'http://192.168.0.71:3000/mobile/registercustom',
         data: {
           'name': _controllerNome.text,
           'email': _controllerEmail.text,
@@ -83,7 +89,9 @@ class _CadastroState extends State<Cadastro> {
         _mensagemErro = "Cadastrado com sucesso!";
       });
 
+      // ignore: avoid_print
       print('Oiiiiii');
+      // ignore: avoid_print
       print(response.data);
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => const Home()));
@@ -92,7 +100,9 @@ class _CadastroState extends State<Cadastro> {
         _mensagemErro = "Erro!";
       });
 
+      // ignore: avoid_print
       print('ERRROOOOOOO');
+      // ignore: avoid_print
       print(e);
     }
   }
@@ -113,7 +123,7 @@ class _CadastroState extends State<Cadastro> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
+                  padding: const EdgeInsets.only(bottom: 0),
                   child: Image.asset(
                     "images/carro-azul.png",
                     width: 200,
@@ -121,7 +131,7 @@ class _CadastroState extends State<Cadastro> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 12, bottom: 20),
+                  padding: const EdgeInsets.only(top: 05, bottom: 02),
                   child: Center(
                     child: Text(
                       _mensagemErro,

@@ -1,3 +1,4 @@
+// ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
 import 'package:quanto_rendes/aplicacao.dart';
 import 'package:dio/dio.dart';
@@ -11,14 +12,6 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  static const TextStyle optionStyle = TextStyle(
-      fontSize: 30,
-      fontWeight: FontWeight.bold,
-      letterSpacing: 0,
-      wordSpacing: 0,
-      decoration: TextDecoration.none,
-      color: Colors.redAccent);
-
   final TextEditingController _controllerEmail =
       TextEditingController(text: "");
   final TextEditingController _controllerSenha =
@@ -122,7 +115,7 @@ class _LoginState extends State<Login> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 12, bottom: 20),
+                  padding: const EdgeInsets.only(top: 05, bottom: 0),
                   child: Center(
                     child: Text(
                       _mensagemErro,
@@ -194,22 +187,27 @@ class _LoginState extends State<Login> {
                 Padding(
                   padding: const EdgeInsets.only(top: 20, bottom: 10),
                   child: RaisedButton(
-                      child: const Text(
-                        "Entrar",
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                      ),
                       color: const Color(0xff91998A),
                       padding: const EdgeInsets.fromLTRB(32, 16, 32, 16),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(32)),
                       onPressed: () {
                         _validarCampos();
-                      }),
+                      },
+                      child: const Text(
+                        "Entrar",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      )),
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(top: 15, bottom: 0),
                 ),
                 Center(
                   child: GestureDetector(
                     child: const Text("Não tem conta? cadastre-se!",
-                        style: TextStyle(color: Colors.white)),
+                        style: TextStyle(
+                          color: Colors.white,
+                        )),
                     onTap: () {
                       Navigator.push(
                           context,
@@ -218,7 +216,7 @@ class _LoginState extends State<Login> {
                     },
                   ),
                 ),
-                const Padding(padding: EdgeInsets.only(top: 20, bottom: 100)),
+                const Padding(padding: EdgeInsets.only(top: 20, bottom: 20)),
                 Center(
                   child: RaisedButton(
                       child: const Text(

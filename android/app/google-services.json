@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "58542586461",
+    "project_id": "quanto-rendes",
+    "storage_bucket": "quanto-rendes.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:58542586461:android:70ad64e5fb3b2801746bb4",
+        "android_client_info": {
+          "package_name": "com.example.quanto_rendes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "58542586461-7h7q7vavg2feag0p614vj7kj4toauc85.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfd_4CC6427ScK_Z-ruBd27AavgwYffFQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "58542586461-7h7q7vavg2feag0p614vj7kj4toauc85.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
