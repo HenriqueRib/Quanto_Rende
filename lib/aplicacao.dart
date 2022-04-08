@@ -16,21 +16,38 @@ class _HomeState extends State<Home> {
       TextEditingController();
   String _textoResultado = "Descubra quanto que seu carro está rendendo";
 
-  _calcularkm() {
-    int kmfinal = int.parse(_controllerkmFinal.text);
-    int kminicial = int.parse(_controllerkmInicial.text);
-    double qtdCombustivel = double.parse(_controllerQtdCombustivel.text);
-    int resultado;
-    double _kmPorLitro;
+  int _selectedIndex = 0;
 
-    resultado = kmfinal - kminicial;
+  void _onItemTapped(int index) {
     setState(() {
-      _kmPorLitro = resultado / qtdCombustivel;
-      _textoResultado = " Desta vez seu carro fez " +
-          _kmPorLitro.toStringAsFixed(
-              _kmPorLitro.truncateToDouble() == _kmPorLitro ? 0 : 2) +
-          "km por Combustível!";
+      _selectedIndex = index;
     });
+    if (index == 1) {}
+  }
+
+  _calcularkm() {
+    try {
+      int kmfinal = int.parse(_controllerkmFinal.text);
+      int kminicial = int.parse(_controllerkmInicial.text);
+      double qtdCombustivel = double.parse(_controllerQtdCombustivel.text);
+      int resultado;
+      double _kmPorLitro;
+
+      resultado = kmfinal - kminicial;
+      if (resultado > 0 || resultado <= 0) {
+        setState(() {
+          _kmPorLitro = resultado / qtdCombustivel;
+          _textoResultado = "Desta vez seu carro fez " +
+              _kmPorLitro.toStringAsFixed(
+                  _kmPorLitro.truncateToDouble() == _kmPorLitro ? 0 : 2) +
+              "km por Combustível!";
+        });
+      }
+    } catch (e) {
+      setState(() {
+        _textoResultado = "Preencha os campos para calcular";
+      });
+    }
   }
 
   _limpar() {
@@ -42,17 +59,34 @@ class _HomeState extends State<Home> {
     });
   }
 
+  static const List<Widget> _widgetOptions = <Widget>[
+    Text(
+      'Index 0: Home',
+    ),
+    Text(
+      'Index 1: Business',
+    ),
+    Text(
+      'Index 2: School',
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Quanto meu carro está rendendo'),
         backgroundColor: Colors.teal,
+        shadowColor: Colors.black,
       ),
+      // body: Center(
+      //   child: _widgetOptions.elementAt(_selectedIndex),
+      // ),
       body: SingleChildScrollView(
         child: Container(
           color: Colors.teal[900],
-          padding: const EdgeInsets.all(10),
+          height: MediaQuery.of(context).size.height * 1,
+          padding: const EdgeInsets.only(right: 15, left: 15, bottom: 05),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
@@ -106,46 +140,74 @@ class _HomeState extends State<Home> {
                 style: const TextStyle(color: Colors.white, fontSize: 19),
                 controller: _controllerQtdCombustivel,
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: RaisedButton(
-                  color: Colors.teal,
-                  textColor: Colors.white,
-                  padding: const EdgeInsets.all(15),
-                  child: const Text(
-                    "Calcular",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  //onPressed: _calcularkm
-                  onPressed: () {
-                    _calcularkm();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => TelaResposta(
-                          valor: _textoResultado,
-                        ),
+              Row(
+                children: <Widget>[
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(top: 20, left: 15, right: 15),
+                    child: RaisedButton(
+                      color: Colors.teal,
+                      textColor: Colors.white,
+                      padding: const EdgeInsets.all(15),
+                      child: const Text(
+                        "Limpar dados",
+                        style: TextStyle(fontSize: 20),
                       ),
-                    );
-                  },
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: RaisedButton(
-                  color: Colors.teal,
-                  textColor: Colors.white,
-                  padding: const EdgeInsets.all(15),
-                  child: const Text(
-                    "Limpar dados",
-                    style: TextStyle(fontSize: 20),
+                      onPressed: () => _limpar(),
+                    ),
                   ),
-                  onPressed: () => _limpar(),
-                ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(top: 20, left: 15, right: 15),
+                    child: RaisedButton(
+                      color: Colors.teal,
+                      textColor: Colors.white,
+                      padding: const EdgeInsets.all(15),
+                      child: const Text(
+                        "Calcular",
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      //onPressed: _calcularkm
+                      onPressed: () {
+                        _calcularkm();
+                        _textoResultado == "Preencha os campos para calcular"
+                            ? _textoResultado =
+                                "Preencha os campos para fazer o calculo corretamente"
+                            : Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => TelaResposta(
+                                    valor: _textoResultado,
+                                  ),
+                                ),
+                              );
+                      },
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.business),
+            label: 'Business',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.school),
+            label: 'School',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        onTap: _onItemTapped,
       ),
     );
   }

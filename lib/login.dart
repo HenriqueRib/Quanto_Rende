@@ -219,20 +219,24 @@ class _LoginState extends State<Login> {
                 const Padding(padding: EdgeInsets.only(top: 20, bottom: 20)),
                 Center(
                   child: RaisedButton(
-                      child: const Text(
-                        "Apenas Calcular!",
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                      ),
-                      color: const Color(0x00000000),
-                      padding: const EdgeInsets.fromLTRB(32, 16, 32, 16),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(32)),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Home()));
-                      }),
+                    child: const Text(
+                      "Apenas Calcular!",
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    ),
+                    color: const Color(0x00000000),
+                    padding: const EdgeInsets.fromLTRB(32, 16, 32, 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(32),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Home(),
+                        ),
+                      );
+                    },
+                  ),
                   // child: GestureDetector(
                   //   child: const Text("Pular etapa e apenas Calcular!",
                   //       style: TextStyle(color: Colors.blue, fontSize: 25)),
