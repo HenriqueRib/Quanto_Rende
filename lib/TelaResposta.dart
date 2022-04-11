@@ -17,15 +17,21 @@ class TelaResposta extends StatefulWidget {
 
 class _TelaRespostaState extends State<TelaResposta> {
   void _salvarInfo() async {
+    print("estou tentando ");
     try {
-      var response =
-          // await Dio().post('https://codeline43.com.br/login', data: {
-          await Dio().post(
-        'http://10.0.2.2:8000/login',
-        data: {
-          'email': 'teste',
-          'password': '123456',
-        },
+      // var response =
+      // await Dio().post('https://codeline43.com.br/login', data: {
+
+      //Caminho pelo emulador mac
+      var response = await Dio().get(
+        'http://10.0.0.142:3000/mobile/verifica',
+        // data: {
+        //   await Dio().post(
+        // 'http://10.0.2.2:8000/login',
+        // data: {
+        // 'email': 'teste',
+        // 'password': '123456',
+        // },
         options: Options(
             followRedirects: false,
             validateStatus: (status) {

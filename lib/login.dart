@@ -47,7 +47,7 @@ class _LoginState extends State<Login> {
       var response =
           // await Dio().post('https://codeline43.com.br/login', data: {
           await Dio().post(
-        'http://10.0.2.2:8000/login',
+        'http://10.0.0.142:3000/login',
         data: {
           'email': _controllerEmail.text,
           'password': _controllerSenha.text,
