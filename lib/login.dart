@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:quanto_rendes/aplicacao.dart';
 import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'cadastro.dart';
 
 class Login extends StatefulWidget {
@@ -43,11 +44,14 @@ class _LoginState extends State<Login> {
   }
 
   void getHttp() async {
+    final prefs = await SharedPreferences.getInstance();
     try {
       var response =
           // await Dio().post('https://codeline43.com.br/login', data: {
           await Dio().post(
-        'http://10.0.0.142:3000/login',
+        'http://10.0.2.2:8000/login',
+        //   await Dio().post(
+        // 'http://10.0.0.142:3000/login',
         data: {
           'email': _controllerEmail.text,
           'password': _controllerSenha.text,
@@ -62,6 +66,7 @@ class _LoginState extends State<Login> {
       setState(() {
         _mensagemErro = "Cadastrado com sucesso!";
       });
+      await prefs.setString('email', _controllerEmail.text);
 
       // ignore: avoid_print
       print('Ok ${response.data}');

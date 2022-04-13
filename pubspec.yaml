@@ -35,6 +35,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   dio: ^4.0.4
   flutter_screenutil: ^5.1.0
+  shared_preferences: ^2.0.13
   # firebase_core: ^1.14.0
   # firebase_messaging: ^11.2.12
 

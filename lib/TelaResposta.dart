@@ -1,7 +1,8 @@
-// ignore_for_file: file_names, unused_element
+// ignore_for_file: file_names
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:quanto_rendes/aplicacao.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'home.dart';
 
 // ignore: must_be_immutable
@@ -17,26 +18,33 @@ class TelaResposta extends StatefulWidget {
 
 class _TelaRespostaState extends State<TelaResposta> {
   void _salvarInfo() async {
-    print("estou tentando ");
+    final prefs = await SharedPreferences.getInstance();
+    final String? _email = prefs.getString('email');
+
+    // ignore: avoid_print
+    print("estou tentando");
+    // ignore: avoid_print
+    print(_email);
+
     try {
       // var response =
       // await Dio().post('https://codeline43.com.br/login', data: {
 
       //Caminho pelo emulador mac
-      var response = await Dio().get(
-        'http://10.0.0.142:3000/mobile/verifica',
-        // data: {
-        //   await Dio().post(
-        // 'http://10.0.2.2:8000/login',
-        // data: {
-        // 'email': 'teste',
-        // 'password': '123456',
-        // },
+      // var response = await Dio().post(
+      // 'http://10.0.0.142:3000/mobile/verifica',
+      // data: {
+      var response = await Dio().post(
+        'http://10.0.2.2:8000/mobile/verifica',
+        data: {
+          'email': _email,
+        },
         options: Options(
-            followRedirects: false,
-            validateStatus: (status) {
-              return status! < 500;
-            }),
+          followRedirects: false,
+          validateStatus: (status) {
+            return status! < 500;
+          },
+        ),
       );
 
       // ignore: avoid_print
