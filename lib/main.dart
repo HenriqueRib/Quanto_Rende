@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'aplicacao.dart';
 import 'login.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+SharedPreferences? sharedPreferences;
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -15,6 +18,7 @@ class MyHttpOverrides extends HttpOverrides {
 }
 
 Future<void> main() async {
+  sharedPreferences = await SharedPreferences.getInstance();
   // runApp(MaterialApp(debugShowCheckedModeBanner: false, home: Home()));
   // runApp(MaterialApp(debugShowCheckedModeBanner: false, home: Login()));
   runApp(const MyApp());
