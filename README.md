@@ -2,6 +2,9 @@
 
 A new Flutter project.
 
+Branch - Develop Project Original. Provalvemente Flutter 1
+Branch - Master Provavelmente atualizando para Flutter 2 ou 3
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
