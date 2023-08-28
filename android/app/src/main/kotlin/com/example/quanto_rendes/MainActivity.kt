@@ -1,4 +1,4 @@
-package com.example.quanto_rendes
+package com.example.quanto
 
 import io.flutter.embedding.android.FlutterActivity
 

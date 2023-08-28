@@ -1,6 +1,6 @@
 // ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
-import 'package:quanto_rendes/TelaResposta.dart';
+import 'package:quanto/pages/TelaResposta.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);

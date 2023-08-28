@@ -1,8 +1,8 @@
 // ignore_for_file: deprecated_member_use, avoid_print
 import 'package:flutter/material.dart';
-import 'package:quanto_rendes/aplicacao.dart';
+import 'package:quanto/aplicacao.dart';
 import 'package:dio/dio.dart';
-import 'package:quanto_rendes/util/constants.dart';
+import 'package:quanto/util/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'cadastro.dart';
 
@@ -50,7 +50,7 @@ class _LoginState extends State<Login> {
 
     try {
       var response = await Dio().post(
-        Constants.siteUrl + "login",
+        Constants.baseUrl + "login",
         data: {
           'email': _controllerEmail.text,
           'password': _controllerSenha.text,

@@ -1,6 +1,6 @@
 {
-    "name": "quanto_rendes",
-    "short_name": "quanto_rendes",
+    "name": "quanto",
+    "short_name": "quanto",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

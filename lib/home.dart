@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 // ignore: unused_import
-import 'package:quanto_rendes/TelaResposta.dart';
+import 'package:quanto/TelaResposta.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);

@@ -1,9 +1,10 @@
 // ignore_for_file: file_names
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:quanto_rendes/aplicacao.dart';
-import 'package:quanto_rendes/util/constants.dart';
+import 'package:quanto/util/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'home.dart';
 // import 'home.dart';
 
 // ignore: must_be_immutable
@@ -29,7 +30,7 @@ class _TelaRespostaState extends State<TelaResposta> {
 
     try {
       var response = await Dio().post(
-        Constants.siteUrl + "mobile/verifica",
+        Constants.baseUrl + "mobile/verifica",
         data: {
           'email': _email,
         },
