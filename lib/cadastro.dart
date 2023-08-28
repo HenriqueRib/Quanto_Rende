@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:quanto_rendes/util/constants.dart';
 import 'aplicacao.dart';
 
 class Cadastro extends StatefulWidget {
@@ -61,7 +62,7 @@ class _CadastroState extends State<Cadastro> {
   void getHttp() async {
     try {
       var response = await Dio().post(
-        'http://10.0.0.142:3000/mobile/registercustom',
+        Constants.siteUrl + "mobile/registercustom",
         data: {
           'name': _controllerNome.text,
           'email': _controllerEmail.text,

@@ -1,7 +1,8 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, avoid_print
 import 'package:flutter/material.dart';
 import 'package:quanto_rendes/aplicacao.dart';
 import 'package:dio/dio.dart';
+import 'package:quanto_rendes/util/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'cadastro.dart';
 
@@ -45,14 +46,11 @@ class _LoginState extends State<Login> {
 
   void getHttp() async {
     final prefs = await SharedPreferences.getInstance();
+    print('getHttp');
 
     try {
-      var response =
-          // await Dio().post('https://codeline43.com.br/login', data: {
-          await Dio().post(
-        'http://10.0.2.2:8000/login',
-        //   await Dio().post(
-        // 'http://10.0.0.142:3000/login',
+      var response = await Dio().post(
+        Constants.siteUrl + "login",
         data: {
           'email': _controllerEmail.text,
           'password': _controllerSenha.text,
@@ -64,12 +62,13 @@ class _LoginState extends State<Login> {
             }),
       );
 
+      print('getHttp');
+
       setState(() {
         _mensagemErro = "Cadastrado com sucesso!";
       });
       await prefs.setString('email', _controllerEmail.text);
 
-      // ignore: avoid_print
       print('Ok ${response.data}');
 
       Navigator.pushReplacementNamed(context, "/home");
@@ -78,7 +77,6 @@ class _LoginState extends State<Login> {
         _mensagemErro = "Erro!";
       });
 
-      // ignore: avoid_print
       print('ERRROOOOOOO -> $e');
     }
   }
@@ -193,32 +191,37 @@ class _LoginState extends State<Login> {
                 Padding(
                   padding: const EdgeInsets.only(top: 20, bottom: 10),
                   child: RaisedButton(
-                      color: const Color(0xff91998A),
-                      padding: const EdgeInsets.fromLTRB(32, 16, 32, 16),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(32)),
-                      onPressed: () {
-                        _validarCampos();
-                      },
-                      child: const Text(
-                        "Entrar",
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                      )),
+                    color: const Color(0xff91998A),
+                    padding: const EdgeInsets.fromLTRB(32, 16, 32, 16),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(32)),
+                    onPressed: () {
+                      _validarCampos();
+                    },
+                    child: const Text(
+                      "Entrar",
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    ),
+                  ),
                 ),
                 const Padding(
                   padding: EdgeInsets.only(top: 15, bottom: 0),
                 ),
                 Center(
                   child: GestureDetector(
-                    child: const Text("Não tem conta? cadastre-se!",
-                        style: TextStyle(
-                          color: Colors.white,
-                        )),
+                    child: const Text(
+                      "Não tem conta? cadastre-se!",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
                     onTap: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Cadastro()));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const Cadastro(),
+                        ),
+                      );
                     },
                   ),
                 ),

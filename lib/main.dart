@@ -1,11 +1,9 @@
-import 'dart:io';
-import 'dart:async';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'aplicacao.dart';
+import 'dart:async';
 import 'login.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
+import 'dart:io';
 //SharedPreferences? sharedPreferences;
 
 class MyHttpOverrides extends HttpOverrides {
