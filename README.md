@@ -11,9 +11,7 @@ Descubra quanto Km por litro faz o seu carro
 
 ## Pages Login e Home
 
-![Login Page](images/Login.jpg)
-
-![Home Page](images/Home.jpg)
+![Login Page](images/Login.jpg) ![Home Page](images/Home.jpg)
 
 ## Funcionalidades
 
