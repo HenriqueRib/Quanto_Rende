@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:fl_toast/fl_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:quanto/menu/configuracao.dart';
 import 'package:quanto/menu/editar.dart';
 import 'package:quanto/menu/guillotine.dart';
@@ -27,7 +29,11 @@ class MyHttpOverrides extends HttpOverrides {
 }
 
 Future<void> main() async {
-  runApp(const MyApp());
+  Intl.defaultLocale = 'pt_BR'; // Define o local padrão
+  initializeDateFormatting('pt_BR', null).then((_) {
+    // Inicializa o formato de data e hora
+    runApp(MyApp()); // Inicie seu aplicativo após a inicialização
+  });
 }
 
 class MyApp extends StatefulWidget {

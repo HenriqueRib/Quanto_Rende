@@ -241,7 +241,7 @@ class _VisualizarPageState extends State<VisualizarPage> {
                   ],
                 ),
                 child: Card(
-                  color: const Color.fromARGB(34, 67, 117, 61),
+                  color: const Color.fromARGB(77, 12, 255, 214),
                   elevation: 5,
                   margin: EdgeInsets.all(5.sp),
                   child: ListTile(
