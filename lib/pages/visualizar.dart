@@ -5,6 +5,7 @@ import 'package:connectivity_wrapper/connectivity_wrapper.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:quanto/dio_config.dart';
@@ -29,12 +30,11 @@ class _VisualizarPageState extends State<VisualizarPage> {
   }
 
   late List _itens = [];
-
   void _getAbastecimento() async {
     final prefs = await SharedPreferences.getInstance();
     try {
-      final String? _email = prefs.getString('email'); // Recuperar
-      final int? _id = prefs.getInt('id'); // Recuperar
+      final String? _email = prefs.getString('email');
+      final int? _id = prefs.getInt('id');
       FormData data = FormData.fromMap({'email': _email, 'id': _id});
       Response res =
           await dioInstance().post("/quanto_rendes/visualizar", data: data);
@@ -240,15 +240,95 @@ class _VisualizarPageState extends State<VisualizarPage> {
                     ),
                   ],
                 ),
-                child: ListTile(
-                  title: Text(
-                    "KM: $_kmAtual, KM rodados: $_kmRodados \nKM por Quantidade de litro ${_valorPorLitro.toStringAsFixed(2)} \nQtd litro:  $_qtdLitro, Valor: R\$$_valorReais ",
-                    style: const TextStyle(color: Colors.white, fontSize: 18),
-                  ),
-                  subtitle: Text(
-                    "Combustível: $_tipoCombustivel litro a $_valorLitro. \nNo dia $_data",
-                    style: const TextStyle(
-                      color: Colors.white,
+                child: Card(
+                  color: const Color.fromARGB(34, 67, 117, 61),
+                  elevation: 5,
+                  margin: EdgeInsets.all(5.sp),
+                  child: ListTile(
+                    contentPadding: EdgeInsets.all(5.sp),
+                    title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Data Registro : $_data",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 5.sp),
+                        Text(
+                          "KM Atual: $_kmAtual",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18.sp,
+                          ),
+                        ),
+                        Text(
+                          "KM Rodados: $_kmRodados",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18.sp,
+                          ),
+                        ),
+                        Text(
+                          "KM por Quantidade de Litro: ${_valorPorLitro.toStringAsFixed(2)}",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18.sp,
+                          ),
+                        ),
+                        Text(
+                          "Quantidade de Litros: $_qtdLitro",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18.sp,
+                          ),
+                        ),
+                        Text(
+                          "Valor: R\$$_valorReais",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18.sp,
+                          ),
+                        ),
+                      ],
+                    ),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 10.sp),
+                        Text(
+                          "Detalhes do Abastecimento",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          "Tipo de Combustível: $_tipoCombustivel",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18.sp,
+                          ),
+                        ),
+                        Text(
+                          "Litros: $_valorLitro",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18.sp,
+                          ),
+                        ),
+                        Text(
+                          "Data: $_data",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18.sp,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),

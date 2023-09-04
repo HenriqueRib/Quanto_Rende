@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:image_picker/image_picker.dart';
 import 'package:quanto/dio_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,35 +26,20 @@ class _PerfilPageState extends State<PerfilPage> {
   _getUser() async {
     final prefs = await SharedPreferences.getInstance();
     try {
-      final String? _email = prefs.getString('email'); // Recuperar
+      final String? _email = prefs.getString('email');
       FormData data = FormData.fromMap({
         'email': _email,
       });
       Response res =
           await dioInstance().post("/quanto_rendes/user", data: data);
-      // print(res.data['data'][0]);
 
       setState(() {
         _controllerNome.text = res.data['data'][0]['name'];
-        _image = res.data['data'][0]['image'];
+        _controllerEmail.text = res.data['data'][0]['email'];
       });
     } catch (e) {
       // print('ERRO $e');
     }
-  }
-
-  _newPhotoCamera() async {
-    // _photo = await picker.pickImage(source: ImageSource.camera);
-    // setState(() {
-    //   _image = _photo!.path;
-    // });
-  }
-
-  _newPhotoGaleria() async {
-    // _photo = await picker.pickImage(source: ImageSource.gallery);
-    // setState(() {
-    //   _image = _photo!.path;
-    // });
   }
 
   _atualizarDados() async {
@@ -64,10 +50,7 @@ class _PerfilPageState extends State<PerfilPage> {
       FormData data = FormData.fromMap({
         'email': _email,
         'name': _controllerNome.text,
-        // 'image': await MultipartFile.fromFile(_photo!.path),
       });
-      //TODO: Verificar porque nao esta salvando a imagem.
-
       Response res = await dioInstance().post("/auth/update/user", data: data);
       if (res.data['status'] == 'success') {
         await prefs.setString('nome', _controllerNome.text);
@@ -83,18 +66,11 @@ class _PerfilPageState extends State<PerfilPage> {
     }
   }
 
-  final bool _subindoImagem = false;
   final TextEditingController _controllerNome = TextEditingController();
-  // ImagePicker picker = ImagePicker();
-  String? _image;
-  // XFile? _photo;
+  final TextEditingController _controllerEmail = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    if (_image is! String || _image == 'null') {
-      _image = 'assets/img/userdefault.png';
-    }
-
     return Scaffold(
       body: Container(
         color: Colors.teal[900],
@@ -104,94 +80,46 @@ class _PerfilPageState extends State<PerfilPage> {
             child: Column(
               children: <Widget>[
                 Container(
-                  child: _subindoImagem
-                      ? const CircularProgressIndicator()
-                      : Container(),
-                ),
-                ClipOval(
-                  child: SizedBox.fromSize(
-                    size: const Size.fromRadius(120),
-                    child: Stack(
-                      children: [
-                        Image.asset(
-                          "$_image",
-                          width: 250,
-                          height: 250,
-                          fit: BoxFit.cover,
-                        ),
-                        Container(
-                          height: 1,
-                          width: 1,
-                          color: Colors.black54,
-                          child: const Icon(
-                            Icons.camera_alt_sharp,
-                            color: Colors.white,
-                          ),
-                        )
-                      ],
-                    ),
+                  width: 1.sw,
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Text(
+                    "Nome",
+                    textAlign: TextAlign.start,
+                    style: TextStyle(color: Colors.white, fontSize: 15.sp),
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    RawMaterialButton(
-                      padding: const EdgeInsets.all(10),
-                      onPressed: () async {
-                        _newPhotoCamera();
-                      },
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: const [
-                          Icon(
-                            Icons.camera,
-                            color: Colors.white,
-                            size: 50,
-                          ),
-                          Text(
-                            'Câmera',
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontFamily: 'Calibri',
-                                color: Colors.white),
-                          )
-                        ],
-                      ),
-                    ),
-                    RawMaterialButton(
-                      padding: const EdgeInsets.all(10),
-                      onPressed: () async {
-                        _newPhotoGaleria();
-                      },
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: const [
-                          Icon(
-                            Icons.image_outlined,
-                            color: Colors.white,
-                            size: 50,
-                          ),
-                          Text(
-                            'Galeria',
-                            style: TextStyle(
-                                fontSize: 12,
-                                fontFamily: 'Calibri',
-                                color: Colors.white),
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 8),
                   child: TextField(
                     controller: _controllerNome,
+                    autofocus: false,
+                    keyboardType: TextInputType.text,
+                    style: const TextStyle(fontSize: 20),
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.fromLTRB(32, 16, 32, 16),
+                      hintText: "Nome",
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(32),
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: 1.sw,
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Text(
+                    "E-mail",
+                    textAlign: TextAlign.start,
+                    style: TextStyle(color: Colors.white, fontSize: 15.sp),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: TextField(
+                    enabled: false,
+                    controller: _controllerEmail,
                     autofocus: false,
                     keyboardType: TextInputType.text,
                     style: const TextStyle(fontSize: 20),

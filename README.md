@@ -1,6 +1,6 @@
 # quanto
 
-A new Flutter project.
+A new Flutter project. 2.10.4
 
 ## Getting Started
 

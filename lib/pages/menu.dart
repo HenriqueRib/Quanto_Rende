@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:quanto/widgets/menu_card.dart';
+import 'package:quanto/widgets/metric_card.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Menu extends StatefulWidget {
@@ -74,6 +75,29 @@ class _MenuState extends State<Menu> {
       const Duration(seconds: 1),
     );
   }
+
+  List<Widget> metricWidgets = [
+    MetricCard(
+      title: "Valor Total Gasto no Mês",
+      // value: _calculatedValueForMonth.toStringAsFixed(2),
+      value: '1',
+    ),
+    MetricCard(
+      title: "Média de Quilometragem Rodada por Litro",
+      // value: _calculatedAverageKmPerLiter.toStringAsFixed(2),
+      value: '1',
+    ),
+    MetricCard(
+      title: "Quilometragem Rodada no Mês Atual",
+      // value: _calculatedKmForMonth.toString(),
+      value: '1',
+    ),
+    MetricCard(
+      title: "Quantidade de Vezes Abastecido no Mês",
+      // value: _calculatedAbastecimentosForMonth.toString(),
+      value: '1',
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -176,6 +200,28 @@ class _MenuState extends State<Menu> {
                                   //     ),
                                   //   ),
                                   // ),
+                                  // Container(
+                                  //   padding: const EdgeInsets.all(20),
+                                  //   alignment: Alignment.topLeft,
+                                  //   child: Column(
+                                  //     crossAxisAlignment:
+                                  //         CrossAxisAlignment.start,
+                                  //     children: [
+                                  //       Text(
+                                  //         "Informações",
+                                  //         style: TextStyle(
+                                  //           fontSize: 22,
+                                  //           color: Colors.black,
+                                  //           fontWeight: FontWeight.bold,
+                                  //         ),
+                                  //       ),
+                                  //       SizedBox(height: 10),
+                                  //       // Exibir a lista de widgets de métricas
+                                  //       Column(children: metricWidgets),
+                                  //     ],
+                                  //   ),
+                                  // ),
+
                                   Container(
                                     padding: const EdgeInsets.all(20),
                                     alignment: Alignment.topLeft,
