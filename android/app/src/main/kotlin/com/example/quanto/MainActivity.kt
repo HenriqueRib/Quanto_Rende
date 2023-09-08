@@ -1,4 +1,4 @@
-package com.example.quanto
+package com.codeline43.quanto
 
 import io.flutter.embedding.android.FlutterActivity
 

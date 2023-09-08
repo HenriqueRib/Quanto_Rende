@@ -24,6 +24,18 @@ class SnacCustom {
     );
   }
 
+  static warning({
+    String? title,
+    String? message,
+  }) {
+    notificationBase(
+      key: 'SnackbarError',
+      backgroundColor: Colors.orange,
+      title: title,
+      message: message,
+    );
+  }
+
   static notificationBase({
     String? key,
     Color? backgroundColor,

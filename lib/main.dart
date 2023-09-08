@@ -29,10 +29,9 @@ class MyHttpOverrides extends HttpOverrides {
 }
 
 Future<void> main() async {
-  Intl.defaultLocale = 'pt_BR'; // Define o local padrão
+  Intl.defaultLocale = 'pt_BR';
   initializeDateFormatting('pt_BR', null).then((_) {
-    // Inicializa o formato de data e hora
-    runApp(MyApp()); // Inicie seu aplicativo após a inicialização
+    runApp(const MyApp());
   });
 }
 

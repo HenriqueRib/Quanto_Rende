@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use, avoid_print
+// ignore_for_file: deprecated_member_use, avoid_print, unnecessary_null_comparison
 import 'dart:async';
 
 import 'package:dio/dio.dart';
@@ -36,6 +36,16 @@ class _MarcarPageState extends State<MarcarPage> {
   void _salvarAbastecimento() async {
     final prefs = await SharedPreferences.getInstance();
     EasyLoading.show(status: 'Carregando...');
+
+    if (_controllerkmAtual.text == "" ||
+        _controllerValorLitro.text == "" ||
+        _controllerValorReais.text == "") {
+      Timer(const Duration(seconds: 1), () => EasyLoading.dismiss());
+      SnacCustom.warning(
+          title: "Opa !",
+          message: "Alguns campos são obrigatorio para continuar");
+      return;
+    }
 
     try {
       final String? _email = prefs.getString('email'); // Recuperar
